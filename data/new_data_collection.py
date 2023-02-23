@@ -10,7 +10,7 @@ def db_connection():
         port = 3306,
         user = "root",
         database = "travel",
-        password = "azaz1919",
+        password = "cycycy1018==",
         charset = "utf8"
         )
     except mysql.connector.Error as e:
@@ -31,18 +31,18 @@ information = obj["result"]["results"]
 for i in information:
     data_1 = []
     id = i["_id"]
-    name = i["stitle"]
-    category = i["CAT2"]
-    description = i["xbody"]
+    name = i["name"]
+    category = i["category"]
+    description = i["description"]
     address = i["address"].replace(' ', '')
-    transport = i["info"]
-    mrt = i["MRT"]
-    latitude = i["latitude"]
-    longitude = i["longitude"]
+    transport = i["transport"]
+    mrt = i["mrt"]
+    lat = i["lat"]
+    lng = i["lng"]
     
-    image = i["file"].split('http')
+    imgs = i["file"].split('http')
     pic_list=[]
-    for j in image:
+    for j in imgs:
         my_suffixes = ("JPG", "PNG", "jpg", "png")
         if j.endswith(my_suffixes) != True  or  j == '' :
             continue
@@ -63,10 +63,10 @@ for i in information:
     #         images_json = json.dumps(image_list)
             
     sql = """
-        INSERT INTO attractions (id, name, category, description, address, transport, mrt, latitude, longitude, images)
+        INSERT INTO attractions (id, name, category, description, address, transport, mrt, lat, lng, imgs)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
-    val = (id, name, category, description, address, transport, mrt, latitude, longitude, pic_list, )
+    val = (id, name, category, description, address, transport, mrt, lat, lng, pic_list, )
     mycursor.execute(sql, val)        
     mydb.commit()
 mydb.close()

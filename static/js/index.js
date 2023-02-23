@@ -2,6 +2,36 @@ let keyword = '';
 let page = 0;
 let isFetchingMore = false;
 let noData = false;
+let dialog;
+let hidden;
+let dialog2;
+
+window.onload = function() {
+  dialog = document.getElementById("dialog");
+  hidden = document.getElementById("hidden");
+  dialog2 = document.getElementById("dialog2");
+};
+function showDialog() {
+  dialog.style.display = "block";
+  hidden.style.display = "block";
+  dialog2.style.display = "none";
+}
+
+function closeDialog() {
+  dialog.style.display = "none";
+  hidden.style.display = "none";
+}
+
+function showDialog2() {
+  dialog2.style.display = "block";
+  hidden.style.display = "block";
+  dialog.style.display = "none";
+}
+
+function closeDialog2() {
+  dialog2.style.display = "none";
+  hidden.style.display = "none";
+}
 
 function removeMainHtml() {
   const main = document.querySelector("main");
@@ -17,7 +47,7 @@ async function attractions() {
   console.log("fetching!");
   isFetchingMore = true;
 
-  const src = `/api/attractions?page=${page}${
+  const src = `http://localhost:3000/api/attractions?page=${page}${
     keyword !== '' ? `&keyword=${keyword}` : ''
   }`;
 
@@ -73,12 +103,6 @@ function updateHtml(response) {
     all.appendChild(img);
     img.setAttribute("src", myString);
     img.setAttribute("class", "img");
-
-    // const spotID = document.createElement('a');
-    // spotID.href = "http://localhost:3000/attraction/" + ID;
-    // img.appendChild(spotID);
-    // spotID.setAttribute("href", spotID.href);
-    // spotID.setAttribute("class", "spotID");
 
     /**
      * name section
